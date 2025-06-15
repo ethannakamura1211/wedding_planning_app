@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Planning Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffeef8 0%, #f0f8ff 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #e9ecef;
+        }
+        .tab {
+            flex: 1;
+            padding: 15px 25px;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: #495057;
+            transition: all 0.3s ease;
+        }
+        .tab:hover {
+            background: #e9ecef;
+            color: #c44569;
+        }
+        .tab.active {
+            background: white;
+            color: #c44569;
+            border-top: 3px solid #c44569;
+        }
+        .tab-content {
+            padding: 30px;
+            min-height: 600px;
+        }
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        .card h3 {
+            margin: 0 0 15px 0;
+            color: #c44569;
+            font-size: 1.4em;
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff6b9d;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #c44569);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 600px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        th {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        .btn {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 2px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(196, 69, 105, 0.4);
+        }
+        .btn-small {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #495057;
+        }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: #ff6b9d;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .priority-high { color: #dc3545; font-weight: bold; }
+        .priority-medium { color: #fd7e14; font-weight: bold; }
+        .priority-low { color: #28a745; font-weight: bold; }
+        .status-pending { background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .status-progress { background: #cce5ff; color: #004085; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .status-complete { background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: -10px;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        .empty-state h3 {
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        .countdown {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .countdown-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ff6b9d;
+        }
+        .countdown-label {
+            font-size: 1.1em;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💒 Wedding Planning</h1>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="openTab(event, 'dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="openTab(event, 'budget')">💰 Budget</button>
+            <button class="tab" onclick="openTab(event, 'todo')">✅ To-Do</button>
+            <button class="tab" onclick="openTab(event, 'gifts')">🎁 Gifts</button>
+        </div>
+
+        <div class="tab-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-pane active">
+                <div class="countdown">
+                    <div class="countdown-number" id="daysUntilWedding">-</div>
+                    <div class="countdown-label">Days Until Wedding</div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>💰 Budget Overview</h3>
+                        <div class="stat-number" id="budgetSpent">£0</div>
+                        <div>of £<span id="totalBudgetDisplay">0</span> budget</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="budgetProgress" style="width: 0%"></div>
+                        </div>
+                        <div id="budgetSummary">0% Used • £0 Remaining</div>
+                    </div>
+
+                    <div class="card">
+                        <h3>✅ Tasks Progress</h3>
+                        <div class="stat-number" id="tasksCompleted">0</div>
+                        <div>of <span id="totalTasks">0</span> tasks completed</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="taskProgress" style="width: 0%"></div>
+                        </div>
+                        <div id="taskSummary">0% Complete • 0 Remaining</div>
+                    </div>
+
+                    <div class="card">
+                        <h3>🎁 Gifts Received</h3>
+                        <div class="stat-number" id="giftsReceived">0</div>
+                        <div>Total Gifts</div>
+                        <div style="margin-top: 15px;">
+                            <div>📝 Thank You Sent: <span id="thankYouSent">0</span></div>
+                            <div>⏳ Thank You Pending: <span id="thankYouPending">0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📅 Wedding Date</h3>
+                    <div class="input-group">
+                        <label>Set Your Wedding Date:</label>
+                        <input type="date" id="weddingDate" onchange="updateCountdown()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Tab -->
+            <div id="budget" class="tab-pane">
+                <div class="card">
+                    <h3>💰 Budget Settings</h3>
+                    <div class="input-group">
+                        <label>Total Budget (£)</label>
+                        <input type="number" id="totalBudget" value="0" min="0" step="100" onchange="updateBudgetSummary()">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Budget Categories</h3>
+                    <button class="btn" onclick="openBudgetModal()">+ Add Category</button>
+
+                    <div class="table-container">
+                        <table id="budgetTable">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Budgeted (£)</th>
+                                    <th>Spent (£)</th>
+                                    <th>Remaining (£)</th>
+                                    <th>% Used</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="budgetTableBody">
+                                <tr class="empty-state">
+                                    <td colspan="6">
+                                        <h3>No budget categories yet</h3>
+                                        <p>Click "Add Category" to start tracking your wedding expenses</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- To-Do Tab -->
+            <div id="todo" class="tab-pane">
+                <div class="card">
+                    <h3>✅ Wedding To-Do List</h3>
+                    <button class="btn" onclick="openTodoModal()">+ Add Task</button>
+
+                    <div class="table-container">
+                        <table id="todoTable">
+                            <thead>
+                                <tr>
+                                    <th>✓</th>
+                                    <th>Task</th>
+                                    <th>Due Date</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="todoTableBody">
+                                <tr class="empty-state">
+                                    <td colspan="6">
+                                        <h3>No tasks yet</h3>
+                                        <p>Click "Add Task" to start planning your wedding</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gifts Tab -->
+            <div id="gifts" class="tab-pane">
+                <div class="card">
+                    <h3>🎁 Gift Registry & Tracking</h3>
+                    <button class="btn" onclick="openGiftModal()">+ Add Gift</button>
+
+                    <div class="table-container">
+                        <table id="giftTable">
+                            <thead>
+                                <tr>
+                                    <th>Gift</th>
+                                    <th>From</th>
+                                    <th>Value (£)</th>
+                                    <th>Date Received</th>
+                                    <th>Thank You Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="giftTableBody">
+                                <tr class="empty-state">
+                                    <td colspan="6">
+                                        <h3>No gifts recorded yet</h3>
+                                        <p>Click "Add Gift" to start tracking your wedding gifts</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Modal -->
+    <div id="budgetModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBudgetModal()">&times;</span>
+            <h2 id="budgetModalTitle">Add Budget Category</h2>
+            <form id="budgetForm">
+                <div class="input-group">
+                    <label>Category Name *</label>
+                    <input type="text" id="budgetCategory" required>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Budgeted Amount (£) *</label>
+                        <input type="number" id="budgetAmount" min="0" step="0.01" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Amount Spent (£)</label>
+                        <input type="number" id="budgetSpentAmount" min="0" step="0.01" value="0">
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 20px;">
+                    <button type="button" class="btn" onclick="closeBudgetModal()">Cancel</button>
+                    <button type="submit" class="btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Todo Modal -->
+    <div id="todoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTodoModal()">&times;</span>
+            <h2 id="todoModalTitle">Add Task</h2>
+            <form id="todoForm">
+                <div class="input-group">
+                    <label>Task Description *</label>
+                    <input type="text" id="todoDescription" required>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Due Date</label>
+                        <input type="date" id="todoDueDate">
+                    </div>
+                    <div class="input-group">
+                        <label>Priority</label>
+                        <select id="todoPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Status</label>
+                    <select id="todoStatus">
+                        <option value="pending" selected>Pending</option>
+                        <option value="progress">In Progress</option>
+                        <option value="complete">Complete</option>
+                    </select>
+                </div>
+                <div style="text-align: right; margin-top: 20px;">
+                    <button type="button" class="btn" onclick="closeTodoModal()">Cancel</button>
+                    <button type="submit" class="btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Gift Modal -->
+    <div id="giftModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeGiftModal()">&times;</span>
+            <h2 id="giftModalTitle">Add Gift</h2>
+            <form id="giftForm">
+                <div class="input-group">
+                    <label>Gift Description *</label>
+                    <input type="text" id="giftDescription" required>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>From *</label>
+                        <input type="text" id="giftFrom" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Value (£)</label>
+                        <input type="number" id="giftValue" min="0" step="0.01">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Date Received</label>
+                        <input type="date" id="giftDateReceived">
+                    </div>
+                    <div class="input-group">
+                        <label>Thank You Status</label>
+                        <select id="giftThankYou">
+                            <option value="pending" selected>Pending</option>
+                            <option value="sent">Sent</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 20px;">
+                    <button type="button" class="btn" onclick="closeGiftModal()">Cancel</button>
+                    <button type="submit" class="btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        const GIST_CONFIG = {
+          gistId: '387eb78484c6049919acbd923db211af', // Replace with your gist ID
+          token: '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', // Replace with your personal access token
+          filename: 'wedding-data.json'
+          };
+        // Data storage
+        let budgetData = [];
+        let todoData = [];
+        let giftData = [];
+        let currentEditIndex = -1;
+        let currentEditType = '';
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-pane");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Wedding countdown
+        function updateCountdown() {
+            const weddingDateInput = document.getElementById('weddingDate');
+            const daysElement = document.getElementById('daysUntilWedding');
+
+            if (weddingDateInput.value) {
+                const weddingDate = new Date(weddingDateInput.value);
+                const today = new Date();
+                const timeDiff = weddingDate.getTime() - today.getTime();
+                const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                daysElement.textContent = daysDiff > 0 ? daysDiff : 0;
+            } else {
+                daysElement.textContent = '-';
+            }
+            saveData();
+        }
+
+        // Budget Functions
+        function openBudgetModal(index = -1) {
+            const modal = document.getElementById('budgetModal');
+            const title = document.getElementById('budgetModalTitle');
+            const form = document.getElementById('budgetForm');
+
+            if (index >= 0) {
+                // Edit mode
+                title.textContent = 'Edit Budget Category';
+                const item = budgetData[index];
+                document.getElementById('budgetCategory').value = item.category;
+                document.getElementById('budgetAmount').value = item.budgeted;
+                document.getElementById('budgetSpentAmount').value = item.spent;
+                currentEditIndex = index;
+                currentEditType = 'budget';
+            } else {
+                // Add mode
+                title.textContent = 'Add Budget Category';
+                form.reset();
+                currentEditIndex = -1;
+            }
+
+            modal.style.display = 'block';
+        }
+
+        function closeBudgetModal() {
+            document.getElementById('budgetModal').style.display = 'none';
+            document.getElementById('budgetForm').reset();
+            currentEditIndex = -1;
+        }
+
+        function deleteBudgetItem(index) {
+            if (confirm('Are you sure you want to delete this budget category?')) {
+                budgetData.splice(index, 1);
+                renderBudgetTable();
+                updateDashboard();
+                saveData();
+            }
+        }
+
+        function renderBudgetTable() {
+    const tbody = document.getElementById('budgetTableBody');
+
+    if (budgetData.length === 0) {
+        tbody.innerHTML = `
+            <tr class="empty-state">
+                <td colspan="6">
+                    <h3>No budget categories yet</h3>
+                    <p>Click "Add Category" to start tracking your wedding expenses</p>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    // Calculate totals
+    const totalBudgeted = budgetData.reduce((sum, item) => sum + item.budgeted, 0);
+    const totalSpent = budgetData.reduce((sum, item) => sum + item.spent, 0);
+    const totalRemaining = totalBudgeted - totalSpent;
+    const overallPercentage = totalBudgeted > 0 ? Math.round((totalSpent / totalBudgeted) * 100) : 0;
+
+    tbody.innerHTML = budgetData.map((item, index) => {
+        const remaining = item.budgeted - item.spent;
+        const percentage = item.budgeted > 0 ? Math.round((item.spent / item.budgeted) * 100) : 0;
+
+        return `
+            <tr>
+                <td>${item.category}</td>
+                <td>£${item.budgeted.toFixed(2)}</td>
+                <td>£${item.spent.toFixed(2)}</td>
+                <td>£${remaining.toFixed(2)}</td>
+                <td>${percentage}%</td>
+                <td>
+                    <button class="btn btn-small" onclick="openBudgetModal(${index})">Edit</button>
+                    <button class="btn btn-small btn-danger" onclick="deleteBudgetItem(${index})">Delete</button>
+                </td>
+            </tr>
+        `;
+    }).join('') + `
+        <tr style="border-top: 3px solid #c44569; background: #f8f9fa; font-weight: bold;">
+            <td><strong>TOTAL</strong></td>
+            <td><strong>£${totalBudgeted.toFixed(2)}</strong></td>
+            <td><strong>£${totalSpent.toFixed(2)}</strong></td>
+            <td><strong>£${totalRemaining.toFixed(2)}</strong></td>
+            <td><strong>${overallPercentage}%</strong></td>
+            <td></td>
+        </tr>
+    `;
+}
+
+        // Todo Functions
+        function openTodoModal(index = -1) {
+            const modal = document.getElementById('todoModal');
+            const title = document.getElementById('todoModalTitle');
+            const form = document.getElementById('todoForm');
+
+            if (index >= 0) {
+                // Edit mode
+                title.textContent = 'Edit Task';
+                const item = todoData[index];
+                document.getElementById('todoDescription').value = item.description;
+                document.getElementById('todoDueDate').value = item.dueDate;
+                document.getElementById('todoPriority').value = item.priority;
+                document.getElementById('todoStatus').value = item.status;
+                currentEditIndex = index;
+                currentEditType = 'todo';
+            } else {
+                // Add mode
+                title.textContent = 'Add Task';
+                form.reset();
+                document.getElementById('todoPriority').value = 'medium';
+                document.getElementById('todoStatus').value = 'pending';
+                currentEditIndex = -1;
+            }
+
+            modal.style.display = 'block';
+        }
+
+        function closeTodoModal() {
+            document.getElementById('todoModal').style.display = 'none';
+            document.getElementById('todoForm').reset();
+            currentEditIndex = -1;
+        }
+
+        function deleteTodoItem(index) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                todoData.splice(index, 1);
+                renderTodoTable();
+                updateDashboard();
+                saveData();
+            }
+        }
+
+        function toggleTodoComplete(index) {
+            todoData[index].status = todoData[index].status === 'complete' ? 'pending' : 'complete';
+            renderTodoTable();
+            updateDashboard();
+            saveData();
+        }
+
+        function renderTodoTable() {
+            const tbody = document.getElementById('todoTableBody');
+
+            if (todoData.length === 0) {
+                tbody.innerHTML = `
+                    <tr class="empty-state">
+                        <td colspan="6">
+                            <h3>No tasks yet</h3>
+                            <p>Click "Add Task" to start planning your wedding</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = todoData.map((item, index) => {
+                const priorityClass = `priority-${item.priority}`;
+                const statusClass = `status-${item.status}`;
+                const isComplete = item.status === 'complete';
+
+                return `
+                    <tr>
+                        <td>
+                            <input type="checkbox" ${isComplete ? 'checked' : ''}
+                                   onchange="toggleTodoComplete(${index})">
+                        </td>
+                        <td>${item.description}</td>
+                        <td>${item.dueDate || '-'}</td>
+                        <td class="${priorityClass}">${item.priority.charAt(0).toUpperCase() + item.priority.slice(1)}</td>
+                        <td><span class="${statusClass}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span></td>
+                        <td>
+                            <button class="btn btn-small" onclick="openTodoModal(${index})">Edit</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteTodoItem(${index})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Gift Functions
+        function openGiftModal(index = -1) {
+            const modal = document.getElementById('giftModal');
+            const title = document.getElementById('giftModalTitle');
+            const form = document.getElementById('giftForm');
+
+            if (index >= 0) {
+                // Edit mode
+                title.textContent = 'Edit Gift';
+                const item = giftData[index];
+                document.getElementById('giftDescription').value = item.description;
+                document.getElementById('giftFrom').value = item.from;
+                document.getElementById('giftValue').value = item.value;
+                document.getElementById('giftDateReceived').value = item.dateReceived;
+                document.getElementById('giftThankYou').value = item.thankYou;
+                currentEditIndex = index;
+                currentEditType = 'gift';
+            } else {
+                // Add mode
+                title.textContent = 'Add Gift';
+                form.reset();
+                document.getElementById('giftThankYou').value = 'pending';
+                currentEditIndex = -1;
+            }
+
+            modal.style.display = 'block';
+        }
+
+        function closeGiftModal() {
+            document.getElementById('giftModal').style.display = 'none';
+            document.getElementById('giftForm').reset();
+            currentEditIndex = -1;
+        }
+
+        function deleteGiftItem(index) {
+            if (confirm('Are you sure you want to delete this gift?')) {
+                giftData.splice(index, 1);
+                renderGiftTable();
+                updateDashboard();
+                saveData();
+            }
+        }
+
+        function renderGiftTable() {
+            const tbody = document.getElementById('giftTableBody');
+
+            if (giftData.length === 0) {
+                tbody.innerHTML = `
+                    <tr class="empty-state">
+                        <td colspan="6">
+                            <h3>No gifts recorded yet</h3>
+                            <p>Click "Add Gift" to start tracking your wedding gifts</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = giftData.map((item, index) => {
+                const statusClass = `status-${item.thankYou === 'sent' ? 'complete' : 'pending'}`;
+
+                return `
+                    <tr>
+                        <td>${item.description}</td>
+                        <td>${item.from}</td>
+                        <td>${item.value ? '£' + parseFloat(item.value).toFixed(2) : '-'}</td>
+                        <td>${item.dateReceived || '-'}</td>
+                        <td><span class="${statusClass}">${item.thankYou.charAt(0).toUpperCase() + item.thankYou.slice(1)}</span></td>
+                        <td>
+                            <button class="btn btn-small" onclick="openGiftModal(${index})">Edit</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteGiftItem(${index})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Form submissions
+        document.getElementById('budgetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const category = document.getElementById('budgetCategory').value;
+            const budgeted = parseFloat(document.getElementById('budgetAmount').value);
+            const spent = parseFloat(document.getElementById('budgetSpentAmount').value) || 0;
+
+            const budgetItem = { category, budgeted, spent };
+
+            if (currentEditIndex >= 0 && currentEditType === 'budget') {
+                budgetData[currentEditIndex] = budgetItem;
+            } else {
+                budgetData.push(budgetItem);
+            }
+
+            renderBudgetTable();
+            updateDashboard();
+            closeBudgetModal();
+            saveData();
+        });
+
+        document.getElementById('todoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const description = document.getElementById('todoDescription').value;
+            const dueDate = document.getElementById('todoDueDate').value;
+            const priority = document.getElementById('todoPriority').value;
+            const status = document.getElementById('todoStatus').value;
+
+            const todoItem = { description, dueDate, priority, status };
+
+            if (currentEditIndex >= 0 && currentEditType === 'todo') {
+                todoData[currentEditIndex] = todoItem;
+            } else {
+                todoData.push(todoItem);
+            }
+
+            renderTodoTable();
+            updateDashboard();
+            closeTodoModal();
+            saveData();
+        });
+
+        document.getElementById('giftForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const description = document.getElementById('giftDescription').value;
+            const from = document.getElementById('giftFrom').value;
+            const value = document.getElementById('giftValue').value;
+            const dateReceived = document.getElementById('giftDateReceived').value;
+            const thankYou = document.getElementById('giftThankYou').value;
+
+            const giftItem = { description, from, value, dateReceived, thankYou };
+
+            if (currentEditIndex >= 0 && currentEditType === 'gift') {
+                giftData[currentEditIndex] = giftItem;
+            } else {
+                giftData.push(giftItem);
+            }
+
+            renderGiftTable();
+            updateDashboard();
+            closeGiftModal();
+            saveData();
+        });
+
+        // Dashboard updates
+        function updateBudgetSummary() {
+            const totalBudget = parseFloat(document.getElementById('totalBudget').value) || 0;
+            document.getElementById('totalBudgetDisplay').textContent = totalBudget.toFixed(0);
+            updateDashboard();
+            saveData();
+        }
+
+        // Save data to localStorage
+        async function saveData() {
+          const data = {
+              budgetData: budgetData,
+              todoData: todoData,
+              giftData: giftData,
+              totalBudget: document.getElementById('totalBudget').value,
+              weddingDate: document.getElementById('weddingDate').value
+          };
+
+          try {
+              const response = await fetch(`https://api.github.com/gists/${GIST_CONFIG.gistId}`, {
+                  method: 'PATCH',
+                  headers: {
+                      'Authorization': `token ${GIST_CONFIG.token}`,
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      files: {
+                          [GIST_CONFIG.filename]: {
+                              content: JSON.stringify(data, null, 2)
+                          }
+                      }
+                  })
+              });
+
+              if (!response.ok) {
+                  throw new Error('Failed to save to GitHub Gist');
+              }
+
+              console.log('Data saved successfully!');
+          } catch (error) {
+              console.error('Error saving data:', error);
+              // Fallback to localStorage if gist fails
+              localStorage.setItem('weddingPlannerData', JSON.stringify(data));
+          }
+      }
+
+// Load data from localStorage
+        async function loadData() {
+          try {
+          const response = await fetch(`https://api.github.com/gists/${GIST_CONFIG.gistId}`);
+
+          if (!response.ok) {
+              throw new Error('Failed to load from GitHub Gist');
+          }
+
+          const gist = await response.json();
+          const fileContent = gist.files[GIST_CONFIG.filename]?.content;
+
+          if (fileContent) {
+              const data = JSON.parse(fileContent);
+
+              // Restore arrays
+              budgetData = data.budgetData || [];
+              todoData = data.todoData || [];
+              giftData = data.giftData || [];
+
+              // Restore form values
+              if (data.totalBudget) {
+                  document.getElementById('totalBudget').value = data.totalBudget;
+              }
+              if (data.weddingDate) {
+                  document.getElementById('weddingDate').value = data.weddingDate;
+              }
+
+              // Re-render all tables and update dashboard
+              renderBudgetTable();
+              renderTodoTable();
+              renderGiftTable();
+              updateCountdown();
+              updateDashboard();
+
+              console.log('Data loaded successfully from GitHub Gist!');
+          }
+          } catch (error) {
+          console.error('Error loading from GitHub Gist:', error);
+          // Fallback to localStorage
+          loadFromLocalStorage();
+          }
+        }
+
+        // Fallback function for localStorage
+        function loadFromLocalStorage() {
+          const savedData = localStorage.getItem('weddingPlannerData');
+          if (savedData) {
+          const data = JSON.parse(savedData);
+
+          budgetData = data.budgetData || [];
+          todoData = data.todoData || [];
+          giftData = data.giftData || [];
+
+          if (data.totalBudget) {
+              document.getElementById('totalBudget').value = data.totalBudget;
+          }
+          if (data.weddingDate) {
+              document.getElementById('weddingDate').value = data.weddingDate;
+          }
+
+          renderBudgetTable();
+          renderTodoTable();
+          renderGiftTable();
+          updateCountdown();
+          updateDashboard();
+          }
+        }
+
+        function updateDashboard() {
+            // Budget calculations
+            const totalBudget = parseFloat(document.getElementById('totalBudget').value) || 0;
+            const totalSpent = budgetData.reduce((sum, item) => sum + item.spent, 0);
+            const budgetPercentage = totalBudget > 0 ? Math.round((totalSpent / totalBudget) * 100) : 0;
+            const budgetRemaining = totalBudget - totalSpent;
+
+            document.getElementById('budgetSpent').textContent = '£' + totalSpent.toFixed(0);
+            document.getElementById('budgetProgress').style.width = Math.min(budgetPercentage, 100) + '%';
+            document.getElementById('budgetSummary').textContent =
+                budgetPercentage + '% Used • £' + budgetRemaining.toFixed(0) + ' Remaining';
+
+            // Task calculations
+            const totalTasks = todoData.length;
+            const completedTasks = todoData.filter(task => task.status === 'complete').length;
+            const taskPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            const remainingTasks = totalTasks - completedTasks;
+
+            document.getElementById('tasksCompleted').textContent = completedTasks;
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('taskProgress').style.width = taskPercentage + '%';
+            document.getElementById('taskSummary').textContent =
+                taskPercentage + '% Complete • ' + remainingTasks + ' Remaining';
+
+            // Gift calculations
+            const totalGifts = giftData.length;
+            const thankYouSent = giftData.filter(gift => gift.thankYou === 'sent').length;
+            const thankYouPending = totalGifts - thankYouSent;
+
+            document.getElementById('giftsReceived').textContent = totalGifts;
+            document.getElementById('thankYouSent').textContent = thankYouSent;
+            document.getElementById('thankYouPending').textContent = thankYouPending;
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const budgetModal = document.getElementById('budgetModal');
+            const todoModal = document.getElementById('todoModal');
+            const giftModal = document.getElementById('giftModal');
+
+            if (event.target == budgetModal) {
+                closeBudgetModal();
+            }
+            if (event.target == todoModal) {
+                closeTodoModal();
+            }
+            if (event.target == giftModal) {
+                closeGiftModal();
+            }
+        }
+
+        // Initialize
+        loadData(); // Now this is async but will work fine
+        updateCountdown();
+        updateDashboard();
+    </script>
+  </html>
