@@ -15,3 +15,6 @@
 - Create a new gist with filename wedding-data.json
 - Add initial content: {}
 - Copy the gist ID from URL
+
+
+### 3. Set up Netlify account and deploy the app
